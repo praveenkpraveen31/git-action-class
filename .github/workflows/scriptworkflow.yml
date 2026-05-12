@@ -1,0 +1,24 @@
+name: Deployment Script
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Show script
+        run: cat scripts/deploy.sh
+      
+      - name: Make script executable
+        run: chmod +x scripts/deploy.sh
+      
+      - name: Run deployment script
+        env:
+          ENVIRONMENT: staging
+          VERSION: 1.0.0
+        run: ./scripts/deploy.sh
