@@ -1,0 +1,22 @@
+name: Database Setup
+
+on: push
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show environment
+        run: |
+          echo "=== System Information ==="
+          echo "OS: $(uname -s)"
+          echo "Current date: $(date)"
+          echo ""
+          echo "=== Environment Variables ==="
+          echo "Home: $HOME"
+          echo "User: $USER"
+          echo ""
+          echo "=== Check installed tools ==="
+          node --version
+          npm --version
+          python --version
