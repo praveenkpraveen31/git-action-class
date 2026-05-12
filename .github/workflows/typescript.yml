@@ -1,0 +1,22 @@
+name: TypeScript Compilation
+
+on: push
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: Install TypeScript globally
+        run: npm install -g typescript
+      
+      - name: Compile TypeScript
+        run: tsc --version && tsc app.ts
+      
+      - name: Run compiled JavaScript
+        run: node app.js
