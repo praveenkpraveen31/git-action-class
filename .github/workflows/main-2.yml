@@ -1,0 +1,9 @@
+name: Main Workflow
+
+on: push
+
+jobs:
+  call-test:
+    uses: ./.github/workflows/reuse.yml
+    with:
+      test-type: unit-tests
