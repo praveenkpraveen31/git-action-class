@@ -1,0 +1,15 @@
+name: When Pull Request is Created
+
+on: pull_request
+
+jobs:
+  check-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "A Pull Request was created or updated"
+      - run: |
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+      - run: |
+          echo "PR Author: ${{ github.event.pull_request.user.login }}"
+      - run: |
+          echo "PR Number: ${{ github.event.pull_request.number }}"
