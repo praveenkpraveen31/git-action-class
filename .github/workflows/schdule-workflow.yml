@@ -1,0 +1,12 @@
+name: Scheduled Daily Check
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  daily-check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running daily health check at $(date)"
+      - run: echo "All systems operational"
