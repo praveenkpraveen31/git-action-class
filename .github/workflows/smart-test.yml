@@ -6,11 +6,6 @@ on:
       - 'scripts/**'
       - 'tests/**'
       - 'package.json'
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
-      - 'LICENSE'
-
 jobs:
   test:
     runs-on: ubuntu-latest
