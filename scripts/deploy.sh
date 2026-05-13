@@ -5,3 +5,4 @@ echo "Environment: $ENVIRONMENT"
 echo "Version: $VERSION"
 
 echo " Deployment complete!"
+echo " Deployed version $VERSION to $ENVIRONMENT environment."
