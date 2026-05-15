@@ -1,0 +1,23 @@
+name: Release on Version Tag
+on:
+  push:
+    tags:
+      - 'v[0-9]+\.[0-9]+\.[0-9]+'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Get version
+        run: |
+             echo "Version: ${{ github.ref_name }}"
+      
+      - name: Build release
+        run: echo "Building release version ${{ github.ref_name }}"
+      
+      - name: Create release
+        run: echo "Creating GitHub release"
+      
+      - name: Complete
+        run: echo "Release complete"
