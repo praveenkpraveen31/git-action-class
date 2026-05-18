@@ -1,0 +1,84 @@
+name: Database Migration
+
+on:
+  workflow_dispatch:
+    inputs:
+      migration-type:
+        description: 'Type of migration'
+        type: choice
+        options:
+          - backup-only
+          - migrate-test
+          - migrate-staging
+          - migrate-production
+        default: backup-only
+        required: true
+      
+      confirm-risk:
+        description: 'I understand this may modify the database'
+        type: boolean
+        required: true
+      
+      notify-team:
+        description: 'Notify team after migration'
+        type: boolean
+        default: true
+        required: false
+
+jobs:
+  migrate:
+    name: Run Migration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Safety check
+        run: |
+          echo "Migration Settings:"
+          echo "Type: ${{ inputs.migration-type }}"
+          echo "Risk Confirmed: ${{ inputs.confirm-risk }}"
+          echo "Notify Team: ${{ inputs.notify-team }}"
+      
+      - name: Verify confirmation
+        if: inputs.confirm-risk == false
+        run: |
+          echo "ERROR: You must confirm you understand the risks!"
+          exit 1
+      
+      - name: Create backup
+        run: |
+          echo "Creating database backup..."
+          echo "Backup timestamp: $(date)"
+          echo "Backup created successfully"
+      
+      - name: Run migration test
+        if: inputs.migration-type == 'migrate-test'
+        run: |
+          echo "Running migration on TEST database"
+          echo "Migration completed"
+      
+      - name: Run migration staging
+        if: inputs.migration-type == 'migrate-staging'
+        run: |
+          echo "Running migration on STAGING database"
+          echo "Migration completed"
+      
+      - name: Run migration production
+        if: inputs.migration-type == 'migrate-production'
+        run: |
+          echo "WARNING: Running migration on PRODUCTION database"
+          echo "This is a critical operation"
+          echo "Migration completed"
+      
+      - name: Verify migration
+        if: inputs.migration-type != 'backup-only'
+        run: |
+          echo "Verifying database integrity"
+          echo "All checks passed"
+      
+      - name: Notify team on Slack
+        if: inputs.notify-team == true
+        run: |
+          echo "Sending notification to team:"
+          echo "Migration type: ${{ inputs.migration-type }}"
+          echo "Status: Complete"
