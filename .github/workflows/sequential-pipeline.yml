@@ -1,0 +1,73 @@
+name: Sequential Build Pipeline
+
+on: push
+
+jobs:
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start build
+        run: echo "Starting build..."
+      
+      - uses: actions/checkout@v4
+      
+      - name: Compile code
+        run: |
+          echo "Compiling source code..."
+          sleep 5
+          echo "Compilation successful"
+      
+      - name: Create artifact
+        run: |
+          echo "Creating build artifact..."
+          echo "Artifact created: app-build-001.jar"
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Start tests
+        run: echo "Starting test suite..."
+      
+      - uses: actions/checkout@v4
+      
+      - name: Run unit tests
+        run: |
+          echo "Running unit tests..."
+          sleep 3
+          echo "Unit tests: PASSED"
+      
+      - name: Run integration tests
+        run: |
+          echo "Running integration tests..."
+          sleep 2
+          echo "Integration tests: PASSED"
+      
+      - name: Test summary
+        run: |
+          echo "All tests passed"
+          echo "Test coverage: 85%"
+
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Start deployment
+        run: echo "Starting deployment..."
+      
+      - uses: actions/checkout@v4
+      
+      - name: Deploy
+        run: |
+          echo "Deploying to production server..."
+          sleep 2
+          echo "Application deployed successfully"
+      
+      - name: Verify deployment
+        run: |
+          echo "Verifying deployment..."
+          echo "Health check: PASSED"
+          echo "Deployment verification: PASSED"

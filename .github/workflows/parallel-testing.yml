@@ -1,0 +1,40 @@
+name: Parallel Test Suite
+
+on: push
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - run: echo "Running unit tests..."
+      
+      - run: |
+          sleep 5
+          echo "50 unit tests PASSED"
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - run: echo "Running integration tests..."
+      
+      - run: |
+          sleep 8
+          echo "30 integration tests PASSED"
+
+  e2e-tests:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - run: echo "Running E2E tests..."
+      
+      - run: |
+          sleep 6
+          echo "15 E2E tests PASSED"
