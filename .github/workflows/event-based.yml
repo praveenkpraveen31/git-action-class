@@ -1,0 +1,27 @@
+name: Event Based Logic
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  handle-event:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - run: |
+            echo "Event: ${{ github.event_name }}"
+      
+      - name: On push
+        if: github.event_name == 'push'
+        run: echo "Code was pushed to repository"
+      
+      - name: On PR
+        if: github.event_name == 'pull_request'
+        run: echo "Pull request was created or updated"
+      
+      - name: On manual
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "Workflow was triggered manually"
