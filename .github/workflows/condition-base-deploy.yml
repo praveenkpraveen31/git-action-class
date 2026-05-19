@@ -1,0 +1,30 @@
+name: Smart Deploy by Branch
+
+on: push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - run: |
+           echo "Current branch: ${{ github.ref_name }}"
+      
+      - name: Run tests
+        run: echo "Running tests..."
+      
+      - name: Build
+        run: echo "Building application..."
+      
+      - name: Deploy to staging
+        if: github.ref == 'refs/heads/develop'
+        run: echo "Deploying to STAGING environment"
+      
+      - name: Deploy to production
+        if: github.ref == 'refs/heads/main'
+        run: echo "Deploying to PRODUCTION environment"
+      
+      - name: Create preview
+        if: startsWith(github.ref, 'refs/heads/feature/')
+        run: echo "Creating preview environment"

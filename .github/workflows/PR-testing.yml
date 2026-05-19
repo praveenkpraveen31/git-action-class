@@ -1,0 +1,25 @@
+name: Smart PR Testing
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+      
+      - run: |
+             echo "PR triggered: ${{ github.event.action }}"
+      
+      - run: npm install
+      
+      - run: npm test
