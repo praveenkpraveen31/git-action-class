@@ -1,0 +1,34 @@
+name: Conditional Deployment with Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        type: boolean
+        description: Deploy?
+        default: false
+      environment:
+        type: choice
+        description: Environment
+        options:
+          - staging
+          - production
+        default: staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy
+        if: inputs.deploy == true
+        run: echo "Deploying to ${{ inputs.environment }}"
+      
+      - name: Extra checks
+        if: inputs.environment == 'production'
+        run: echo "Running extra safety checks for production"
+      
+      - name: Skip message
+        if: inputs.deploy == false
+        run: echo "Deployment skipped"
