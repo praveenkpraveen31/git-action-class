@@ -1,0 +1,15 @@
+name: GitHub Context Example
+
+on: push
+
+jobs:
+  show-context:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Event: ${{ github.event_name }}"
+          echo "Workspace: ${{ github.workspace }}"
